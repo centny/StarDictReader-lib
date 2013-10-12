@@ -250,7 +250,11 @@ void Sdr::unloadDict() {
 }
 //
 SdrRes Sdr::find(string word) {
-	SdrRes nfound = { 0, 0, 0, 0, "", word, "", "not found" };
+    SdrRes nfound = { 0, 0, 0, 0, "", word, "", "not found" };
+    if(!this->edx){
+        nfound.msg="edx not initial.";
+        return nfound;
+    }
 	const char* tword = word.c_str();
 	int wsize = word.length();
 	int beg = 0, end = this->edxEntryCount;

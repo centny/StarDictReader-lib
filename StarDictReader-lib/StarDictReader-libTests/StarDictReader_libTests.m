@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-
+#import "SDictReader.h"
 @interface StarDictReader_libTests : XCTestCase
 
 @end
@@ -28,7 +28,17 @@
 
 - (void)testExample
 {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    SDictReader* reader=[[SDictReader alloc]initWithRPath:@"/Users/cny/Tmp/stardict-langdao-ec-gb-2.4.2" name:@"langdao-ec-gb"];
+    NSString* msg;
+    msg=[reader createEdx:4];
+    msg=[reader loadDict];
+    if(msg){
+        NSLog(@"%@",msg);
+        return;
+    }
+    NSLog(@"%@,%d",[reader version],[reader wordcount]);
+    SDictRes* res=[reader find:@"a"];
+    NSLog(@"%@,%@",res.content,res.msg);
 }
 
 @end

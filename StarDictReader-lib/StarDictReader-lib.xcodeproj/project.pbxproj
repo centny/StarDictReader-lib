@@ -17,6 +17,7 @@
 		C304EB5418084B2C0068CEA7 /* SDictReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = C304EB5218084B2C0068CEA7 /* SDictReader.mm */; };
 		C304EB5718084B490068CEA7 /* Sdr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C304EB5518084B490068CEA7 /* Sdr.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		C304EB6618084BC50068CEA7 /* SDictReader.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C304EB5318084B2C0068CEA7 /* SDictReader.h */; };
+		C3CA15501808E9EF0009D7B4 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C3CA154F1808E9EF0009D7B4 /* libc++.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		C304EB5318084B2C0068CEA7 /* SDictReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDictReader.h; sourceTree = "<group>"; };
 		C304EB5518084B490068CEA7 /* Sdr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sdr.cpp; path = ../../libsdr/src/Sdr.cpp; sourceTree = "<group>"; };
 		C304EB5618084B490068CEA7 /* Sdr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sdr.h; path = ../../libsdr/src/Sdr.h; sourceTree = "<group>"; };
+		C3CA154F1808E9EF0009D7B4 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3CA15501808E9EF0009D7B4 /* libc++.dylib in Frameworks */,
 				C304EB3B18084ABD0068CEA7 /* XCTest.framework in Frameworks */,
 				C304EB3E18084ABD0068CEA7 /* UIKit.framework in Frameworks */,
 				C304EB4118084ABD0068CEA7 /* libStarDictReader-lib.a in Frameworks */,
@@ -103,6 +106,7 @@
 		C304EB2B18084ABD0068CEA7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C3CA154F1808E9EF0009D7B4 /* libc++.dylib */,
 				C304EB2C18084ABD0068CEA7 /* Foundation.framework */,
 				C304EB3A18084ABD0068CEA7 /* XCTest.framework */,
 				C304EB3D18084ABD0068CEA7 /* UIKit.framework */,

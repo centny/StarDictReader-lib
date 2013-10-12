@@ -8,23 +8,184 @@
 
 #import "SDictReader.h"
 #include "Sdr.h"
-@interface SDictReader ()
-@property(nonatomic)sdr::Sdr * sdr;
+using namespace sdr;
+using namespace std;
+@implementation SDictRes
+
 @end
 //
+@interface SDictReader ()
+@property(nonatomic) Sdr *sdr;
+@end
+
+NSString *stoNSString(string s)
+{
+	if (s.empty()) {
+		return nil;
+	} else {
+		return [NSString stringWithUTF8String:s.c_str()];
+	}
+}
+
+//
+SDictRes *toDictRes(SdrRes sres)
+{
+	SDictRes *dres = [[SDictRes alloc]init];
+
+	dres.edxBeg		= sres.edxBeg;
+	dres.edxLen		= sres.edxLen;
+	dres.idxBeg		= sres.idxBeg;
+	dres.idxEnd		= sres.idxEnd;
+	dres.matched	= stoNSString(sres.matched);
+	dres.content	= stoNSString(sres.content);
+	dres.msg		= stoNSString(sres.msg);
+	//
+	return dres;
+}
+
+//
 @implementation SDictReader
+- (id)initWithRPath:(NSString *)rpath name:(NSString *)name
+{
+	self = [super init];
+    
+	if (self) {
+		self.sdr = new Sdr([rpath UTF8String], [name UTF8String]);
+	}
+    
+	return self;
+}
 - (id)initWithRPath:(NSString *)rpath name:(NSString *)name medx:(BOOL)medx
 {
 	self = [super init];
 
 	if (self) {
-        self.sdr=new sdr::Sdr([rpath UTF8String],[name UTF8String],medx);
-    }
+		self.sdr = new Sdr([rpath UTF8String], [name UTF8String], medx);
+	}
 
 	return self;
 }
--(void)dealloc{
-    delete self.sdr;
+
+- (NSString *)idxpath
+{
+	return stoNSString(self.sdr->idxpath());
 }
+
+- (NSString *)edxpath
+{
+	return stoNSString(self.sdr->edxpath());
+}
+
+- (NSString *)dictpath
+{
+	return stoNSString(self.sdr->dictpath());
+}
+
+- (NSString *)infopath
+{
+	return stoNSString(self.sdr->infopath());
+}
+
+//
+// get the value in .ifo by name.
+- (NSString *)info:(NSString *)key
+{
+	return stoNSString(self.sdr->info([key UTF8String]));
+}
+
+// get the dict version.
+- (NSString *)version
+{
+	return stoNSString(self.sdr->version());
+}
+
+// get the word count in dict.
+- (int)wordcount
+{
+	return self.sdr->wordcount();
+}
+
+// get idx file size.
+- (long)idxfilesize
+{
+	return self.sdr->idxfilesize();
+}
+
+// get the book name.
+- (NSString *)bookname
+{
+	return stoNSString(self.sdr->bookname());
+}
+
+// the .dict format type.
+- (NSString *)sametypesequence
+{
+	return stoNSString(self.sdr->sametypesequence());
+}
+
+// check if dict version less tart version.
+- (bool)lessVersion:(NSString *)tver
+{
+	return self.sdr->lessVersion([tver UTF8String]);
+}
+
+//
+// load dict info,return error message,return empty string when success.
+- (NSString *)loadDictInfo
+{
+	return stoNSString(self.sdr->loadDictInfo());
+}
+
+// load dict,return error message,return empty string when success.
+- (NSString *)loadDict
+{
+	return stoNSString(self.sdr->loadDict());
+}
+
+// free the dict.
+- (void)unloadDict
+{
+	self.sdr->unloadDict();
+}
+
+// find the dict by word.
+- (SDictRes *)find:(NSString *)word
+{
+	SdrRes sres = self.sdr->find([word UTF8String]);
+
+	return toDictRes(sres);
+}
+
+// find the dict by .idx offset.
+- (SDictRes *)find:(long)beg_idx end:(long)end_idx word:(NSString *)word
+{
+	SdrRes sres = self.sdr->find(beg_idx, end_idx, [word UTF8String]);
+
+	return toDictRes(sres);
+}
+
+// find the m type dict.
+- (NSString *)dictm:(long)beg size:(long)size
+{
+	return stoNSString(self.sdr->dictm(beg, size));
+}
+
+//
+// create the .edx file by edx size,oft64:if use 64 bit offset.
+- (NSString *)createEdx:(int)ecount oft64:(bool)oft64
+{
+	return stoNSString(self.sdr->createEdx(ecount, oft64));
+}
+
+- (NSString *)createEdx:(int)ecount
+{
+	return stoNSString(self.sdr->createEdx(ecount));
+}
+
+- (void)dealloc
+{
+	delete self.sdr;
+}
+
 @end
 
