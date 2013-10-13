@@ -159,6 +159,9 @@ bool Sdr::lessVersion(string tver) {
 }
 //
 string Sdr::loadDictInfo() {
+    if(this->infoes.size()){
+        return "";
+    }
 	string fpath = this->infopath();
 	fstream info(fpath.c_str(), ios::in | ios::binary);
 	if (!info.is_open()) {

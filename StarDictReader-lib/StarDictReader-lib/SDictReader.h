@@ -20,7 +20,9 @@
 //
 @interface SDictReader : NSObject
 //
++ (id)sdictReaderWithRPath:(NSString *)rpath;
 - (id)initWithRPath:(NSString *)rpath name:(NSString *)name;
++ (id)sdictReaderWithRPath:(NSString *)rpath medx:(BOOL)medx;
 - (id)initWithRPath:(NSString *)rpath name:(NSString *)name medx:(BOOL)medx;
 //
 - (NSString *)idxpath;
@@ -59,5 +61,8 @@
 // create the .edx file by edx size,oft64:if use 64 bit offset.
 - (NSString *)createEdx:(int)ecount oft64:(bool)oft64;
 - (NSString *)createEdx:(int)ecount;
+
+//
++ (NSString*)findDictName:(NSString*)rpath;
 @end
 
