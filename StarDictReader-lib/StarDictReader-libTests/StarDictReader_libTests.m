@@ -42,7 +42,7 @@
 }
 - (void)testFindDict{
 //    SDictReader* reader=[[SDictReader alloc]initWithRPath:@"/Users/cny/Tmp/stardict-langdao-ec-gb-2.4.2"];
-    NSString* name=[SDictReader findDictName:@"/Users/cny/Tmp/stardict-langdao-ec-gb-2.4.2"];
+    NSString* name=[SDictReader findDictFName:@"/Users/cny/Tmp/stardict-langdao-ec-gb-2.4.2"];
     NSLog(@"name:%@",name);
 }
 @end

@@ -84,6 +84,8 @@ public:
 	//
 	//load dict info,return error message,return empty string when success.
 	string loadDictInfo();
+    //check if dict already loaded.
+    bool isDictLoaded();
 	//load dict,return error message,return empty string when success.
 	string loadDict();
 	//free the dict.

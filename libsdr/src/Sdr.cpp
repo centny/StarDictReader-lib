@@ -182,7 +182,15 @@ string Sdr::loadDictInfo() {
 	return "";
 }
 //
+bool Sdr::isDictLoaded(){
+    return this->edx_f!=NULL;
+}
+//
 string Sdr::loadDict() {
+    if(this->isDictLoaded()){
+        return "dict already loaded";
+    }
+    this->loadDictInfo();
 	string epath = this->edxpath();
 	string ipath = this->idxpath();
 	string dpath = this->dictpath();
@@ -253,6 +261,9 @@ void Sdr::unloadDict() {
 }
 //
 SdrRes Sdr::find(string word) {
+    if(!this->isDictLoaded()){
+        this->loadDict();
+    }
     SdrRes nfound = { 0, 0, 0, 0, "", word, "", "not found" };
     if(!this->edx){
         nfound.msg="edx not initial.";
@@ -359,7 +370,9 @@ SdrRes Sdr::find(string word) {
 	return nfound;
 }
 SdrRes Sdr::find(long beg_idx, long end_idx, string word) {
-	cout << "find idx<<" << endl;
+    if(!this->isDictLoaded()){
+        this->loadDict();
+    }
 	SdrRes nfound = { 0, 0, 0, 0, "", word, "", "not found" };
 	long idxsize = this->idxfilesize();
 	if (end_idx < 0) {
@@ -430,10 +443,7 @@ string Sdr::dictm(long beg, long size) {
 //}
 //
 string Sdr::createEdx(int ecount, bool oft64) {
-	string lres = this->loadDictInfo();
-	if (lres.length()) {
-		return lres;
-	}
+    this->loadDictInfo();
 	string epath = this->edxpath();
 	string ipath = this->idxpath();
 	if (fexist(epath.c_str())) {
