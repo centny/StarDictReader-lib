@@ -46,39 +46,45 @@ SDictRes *toDictRes(SdrRes sres)
 //
 @implementation SDictReader
 + (id)sdictReaderWithRPath:(NSString *)rpath{
-    NSString* name=[SDictReader findDictName:rpath];
-    if(name){
-        return [[SDictReader alloc]initWithRPath:rpath name:name];
+    NSString* fname=[SDictReader findDictFName:rpath];
+    if(fname){
+        return [[SDictReader alloc]initWithRPath:rpath fname:fname];
     }else{
         NSLog(@"Erro:not a invalid path for stardict,%@",rpath);
         return nil;
     }
 }
-- (id)initWithRPath:(NSString *)rpath name:(NSString *)name
+- (id)initWithRPath:(NSString *)rpath fname:(NSString *)fname
 {
 	self = [super init];
 
 	if (self) {
-		self.sdr = new Sdr([rpath UTF8String], [name UTF8String]);
+		self.sdr = new Sdr([rpath UTF8String], [fname UTF8String]);
+        _rpath=rpath;
+        _fname=fname;
+        _medx=NO;
 	}
 
 	return self;
 }
 + (id)sdictReaderWithRPath:(NSString *)rpath medx:(BOOL)medx{
-    NSString* name=[SDictReader findDictName:rpath];
-    if(name){
-        return [[SDictReader alloc]initWithRPath:rpath name:name medx:medx];
+    NSString* fname=[SDictReader findDictFName:rpath];
+    if(fname){
+        return [[SDictReader alloc]initWithRPath:rpath fname:fname medx:medx];
     }else{
         NSLog(@"Erro:not a invalid path for stardict,%@",rpath);
         return nil;
     }
 }
-- (id)initWithRPath:(NSString *)rpath name:(NSString *)name medx:(BOOL)medx
+- (id)initWithRPath:(NSString *)rpath fname:(NSString *)fname medx:(BOOL)medx
 {
 	self = [super init];
 
 	if (self) {
-		self.sdr = new Sdr([rpath UTF8String], [name UTF8String], medx);
+		self.sdr = new Sdr([rpath UTF8String], [fname UTF8String], medx);
+        _rpath=rpath;
+        _fname=fname;
+        _medx=medx;
 	}
 
 	return self;
@@ -205,7 +211,7 @@ SDictRes *toDictRes(SdrRes sres)
 	delete self.sdr;
 }
 
-+ (NSString *)findDictName:(NSString *)rpath
++ (NSString *)findDictFName:(NSString *)rpath
 {
 	NSFileManager	*fm		= [NSFileManager defaultManager];
 	BOOL			isdir	= false;
@@ -215,7 +221,7 @@ SDictRes *toDictRes(SdrRes sres)
 	}
 	NSMutableArray	*nary	= [NSMutableArray array];
 
-	for (NSString *path in [fm subpathsAtPath : rpath]) {
+	for (NSString *path in [fm contentsOfDirectoryAtPath:rpath error:nil]) {
 		if ([path hasSuffix:@".idx"] || [path hasSuffix:@".ifo"] || [path hasSuffix:@".dict"]) {
 			[nary addObject:[path stringByDeletingPathExtension]];
 		}

@@ -19,11 +19,14 @@
 @end
 //
 @interface SDictReader : NSObject
+@property(nonatomic, readonly) NSString *fname;
+@property(nonatomic, readonly) NSString *rpath;
+@property(nonatomic, readonly) BOOL		medx;
 //
 + (id)sdictReaderWithRPath:(NSString *)rpath;
-- (id)initWithRPath:(NSString *)rpath name:(NSString *)name;
+- (id)initWithRPath:(NSString *)rpath fname:(NSString *)fname;
 + (id)sdictReaderWithRPath:(NSString *)rpath medx:(BOOL)medx;
-- (id)initWithRPath:(NSString *)rpath name:(NSString *)name medx:(BOOL)medx;
+- (id)initWithRPath:(NSString *)rpath fname:(NSString *)name medx:(BOOL)medx;
 //
 - (NSString *)idxpath;
 - (NSString *)edxpath;
@@ -63,6 +66,6 @@
 - (NSString *)createEdx:(int)ecount;
 
 //
-+ (NSString*)findDictName:(NSString*)rpath;
++ (NSString *)findDictFName:(NSString *)rpath;
 @end
 
